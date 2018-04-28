@@ -1,7 +1,7 @@
 Depression and anxiety self-testing telegram bot
 ====
 
-Telegram [bot](t.me/m00dbot) for self-testing of depression and anxiety.
+Telegram [bot](https://t.me/m00dbot) for self-testing of depression and anxiety.
 Tests available:
 
 - [Hamilton Anxiety Rating Scale](https://en.wikipedia.org/wiki/Hamilton_Anxiety_Rating_Scale)
