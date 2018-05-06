@@ -1,4 +1,5 @@
 import logging
+import os
 
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackQueryHandler
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
@@ -50,7 +51,7 @@ def process_answer(bot, update, chat_data):
 if __name__ == '__main__':
     hars_quiz_storage = HARSQuizStorage()
     madrs_quiz_storage = MADRSQuizStorage()
-    updater = Updater(token='593799930:AAFSA4HCCiwZkeDbywe_MTu-e1LqN-1ZCJQ')
+    updater = Updater(token=os.environ.get('TG_TOKEN'))
     dispatcher = updater.dispatcher
     start_hars_quiz_handler = CommandHandler('hars', hars_quiz, pass_chat_data=True)
     dispatcher.add_handler(start_hars_quiz_handler)
