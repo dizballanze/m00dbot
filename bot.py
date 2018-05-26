@@ -4,7 +4,7 @@ import os
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackQueryHandler
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 
-from storage import HARSQuizStorage, MADRSQuizStorage
+from storage import QuizStorage
 
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.DEBUG)
@@ -17,15 +17,13 @@ def send_question(question, bot, chat_id):
 
 
 def hars_quiz(bot, update, chat_data):
-    chat_data['quiz_type'] = 'hars'
-    quiz = hars_quiz_storage.get_or_create(update.message.chat_id, 'ru')
+    quiz = quiz_storage.create_quiz(update.message.chat_id, 'hars')
     question = quiz.get_question()
     send_question(question, bot, update.message.chat_id)
 
 
 def madrs_quiz(bot, update, chat_data):
-    chat_data['quiz_type'] = 'madrs'
-    quiz = madrs_quiz_storage.get_or_create(update.message.chat_id, 'ru')
+    quiz = quiz_storage.create_quiz(update.message.chat_id, 'madrs')
     question = quiz.get_question()
     send_question(question, bot, update.message.chat_id)
 
@@ -35,12 +33,8 @@ def process_answer(bot, update, chat_data):
     bot.edit_message_text(
         text="{}\n{}".format(query.message.text, query.data), chat_id=query.message.chat_id,
         message_id=query.message.message_id)
-    if chat_data['quiz_type'] == 'hars':
-        storage = hars_quiz_storage
-    elif chat_data['quiz_type'] == 'madrs':
-        storage = madrs_quiz_storage
-    quiz = storage.get_or_create(query.message.chat_id, 'ru')
-    quiz.save_answer(int(query.data))
+    quiz = quiz_storage.get_latest_quiz(query.message.chat_id)
+    quiz_storage.save_answer(quiz, int(query.data))
     if quiz.is_completed:
         bot.send_message(chat_id=query.message.chat_id, text="🏁\n{}".format(quiz.get_result()))
     else:
@@ -49,8 +43,7 @@ def process_answer(bot, update, chat_data):
 
 
 if __name__ == '__main__':
-    hars_quiz_storage = HARSQuizStorage()
-    madrs_quiz_storage = MADRSQuizStorage()
+    quiz_storage = QuizStorage(os.environ.get('DB_NAME'))
     updater = Updater(token=os.environ.get('TG_TOKEN'))
     dispatcher = updater.dispatcher
     start_hars_quiz_handler = CommandHandler('hars', hars_quiz, pass_chat_data=True)

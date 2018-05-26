@@ -12,7 +12,7 @@ CREATE TABLE chats (
 
 CREATE_QUIZES_TABLE_SQL = """
 CREATE TABLE quizes (
-    id INTEGER PRIMARY KEY,
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
     chat_id VARCHAR(128),
     created_at TEXT,
     type VARCHAR(10),
@@ -23,7 +23,7 @@ CREATE TABLE quizes (
 
 CREATE_ANSWERS_TABLE_SQL = """
 CREATE TABLE answers (
-    id INTEGER PRIMARY KEY,
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
     quiz_id UNSIGNED BIG INT,
     question_number INT,
     answer INT,
