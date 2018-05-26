@@ -14,14 +14,14 @@ class BaseQuiz:
         self.answers = [] if answers is None else answers
 
     def get_question(self):
-        raise NotImplemented
+        raise NotImplementedError
 
     def save_answer(self, answer):
         self.answers.append(answer)
         self.question_number += 1
 
     def get_result(self):
-        raise NotImplemented
+        raise NotImplementedError
 
     @property
     def is_completed(self):
@@ -29,8 +29,7 @@ class BaseQuiz:
 
     @property
     def questions_count(self):
-        raise NotImplemented
-
+        raise NotImplementedError
 
 
 class HARSQuiz(BaseQuiz):

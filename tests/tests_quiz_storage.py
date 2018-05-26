@@ -16,8 +16,8 @@ class QuizStorageTestCase(TestCase):
         self.db_name = 'test.db'
         try:
             os.unlink(self.db_name)
-        except FileNotFoundError:
-            ...
+        except OSError:
+            pass
         create_database(self.db_name)
         self.storage = QuizStorage(self.db_name)
 
@@ -76,7 +76,7 @@ class QuizStorageTestCase(TestCase):
     def test_create_quiz_inserts_quiz_to_db(self):
         chat_id = 31337
         self._insert_chat(chat_id, lang='ru')
-        quiz = self.storage.create_quiz(chat_id, 'madrs')
+        self.storage.create_quiz(chat_id, 'madrs')
         cur = self._get_connection().cursor()
         cur.execute('SELECT * FROM quizes')
         res = cur.fetchone()
