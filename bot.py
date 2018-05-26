@@ -10,25 +10,65 @@ from storage import QuizStorage
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.DEBUG)
 
 
+def start(bot, update):
+    # Select language
+    langs_markup = InlineKeyboardMarkup([[
+        InlineKeyboardButton('English {}'.format(b'\xF0\x9F\x87\xAC\xF0\x9F\x87\xA7'.decode()), callback_data='en'),
+        InlineKeyboardButton('Русский {}'.format(b'\xF0\x9F\x87\xB7\xF0\x9F\x87\xBA'.decode()), callback_data='ru')]])
+    bot.send_message(
+        text='Choose your language / Выберите язык', reply_markup=langs_markup, chat_id=update.message.chat_id)
+
+
+def process_lang(bot, update):
+    query = update.callback_query
+    bot.edit_message_text(
+        text="{}\n{}".format(query.message.text, query.data), chat_id=query.message.chat_id,
+        message_id=query.message.message_id)
+    # Save language here
+    send_frequency_question(bot, query.message.chat_id)
+
+
+def send_frequency_question(bot, chat_id):
+    frequency_markup = InlineKeyboardMarkup([[
+        InlineKeyboardButton('None', callback_data='none'), InlineKeyboardButton('Daily', callback_data='daily'),
+        InlineKeyboardButton('Weekly', callback_data='weekly')]])
+    bot.send_message(text='Reminder frequency:', reply_markup=frequency_markup, chat_id=chat_id)
+
+
+def process_frequency(bot, update):
+    query = update.callback_query
+    bot.edit_message_text(
+        text="{}\n{}".format(query.message.text, query.data), chat_id=query.message.chat_id,
+        message_id=query.message.message_id)
+    # Save frequency here
+    send_intro(bot, query.message.chat_id)
+
+
+def send_intro(bot, chat_id):
+    bot.send_message(text='Chat bot description here\n\n/hars - Hamilton Anxiety Rating Scale\n'
+                     '/madrs - Montgomery–Åsberg Depression Rating Scale\n/start - settings',
+                     chat_id=chat_id)
+
+
 def send_question(question, bot, chat_id):
     keyboard = [[InlineKeyboardButton(answer, callback_data=i)] for i, answer in enumerate(question.answers)]
     reply_markup = InlineKeyboardMarkup(keyboard)
     bot.send_message(text=question.question, reply_markup=reply_markup, chat_id=chat_id)
 
 
-def hars_quiz(bot, update, chat_data):
+def hars_quiz(bot, update):
     quiz = quiz_storage.create_quiz(update.message.chat_id, 'hars')
     question = quiz.get_question()
     send_question(question, bot, update.message.chat_id)
 
 
-def madrs_quiz(bot, update, chat_data):
+def madrs_quiz(bot, update):
     quiz = quiz_storage.create_quiz(update.message.chat_id, 'madrs')
     question = quiz.get_question()
     send_question(question, bot, update.message.chat_id)
 
 
-def process_answer(bot, update, chat_data):
+def process_answer(bot, update):
     query = update.callback_query
     bot.edit_message_text(
         text="{}\n{}".format(query.message.text, query.data), chat_id=query.message.chat_id,
@@ -46,9 +86,13 @@ if __name__ == '__main__':
     quiz_storage = QuizStorage(os.environ.get('DB_NAME'))
     updater = Updater(token=os.environ.get('TG_TOKEN'))
     dispatcher = updater.dispatcher
-    start_hars_quiz_handler = CommandHandler('hars', hars_quiz, pass_chat_data=True)
+    start_handler = CommandHandler('start', start)
+    dispatcher.add_handler(start_handler)
+    updater.dispatcher.add_handler(CallbackQueryHandler(process_lang, pattern='(en|ru)'))
+    updater.dispatcher.add_handler(CallbackQueryHandler(process_frequency, pattern='(none|daily|weekly)'))
+    start_hars_quiz_handler = CommandHandler('hars', hars_quiz)
     dispatcher.add_handler(start_hars_quiz_handler)
-    start_madrs_quiz_handler = CommandHandler('madrs', madrs_quiz, pass_chat_data=True)
+    start_madrs_quiz_handler = CommandHandler('madrs', madrs_quiz)
     dispatcher.add_handler(start_madrs_quiz_handler)
-    updater.dispatcher.add_handler(CallbackQueryHandler(process_answer, pass_chat_data=True))
+    updater.dispatcher.add_handler(CallbackQueryHandler(process_answer, pattern='\d+'))  # noqa
     updater.start_polling()
