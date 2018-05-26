@@ -23,30 +23,40 @@ class QuizStorage:
         answers = []
         for answer in answers_data:
             answers.append(answer['answer'])
-        return self._create_quiz_instance(quiz_data['type'], chat_data['language'], answers)
+        return self._create_quiz_instance(quiz_data['id'], quiz_data['type'], chat_data['language'], answers)
 
     def create_quiz(self, chat_id, type_):
         chat_data = self._get_chat_data(chat_id)
         self.conn.execute(
-            "INSERT INTO quizes (chat_id, created_at, type, question_number) VALUES (?, ?, ?, ?)",
+            'INSERT INTO quizes (chat_id, created_at, type, question_number) VALUES (?, ?, ?, ?)',
             (chat_id, datetime.datetime.now().strftime('%Y-%m-%d %H-%M-%S'), type_, 0))
         self.conn.commit()
-        return self._create_quiz_instance(type_, chat_data['language'], [])
+        return self._create_quiz_instance(self._get_last_id(), type_, chat_data['language'], [])
 
     def save_answer(self, quiz, answer):
-        # Save answer to DB and update quiz instance
-        ...
+        question_number = quiz.question_number + 1
+        self.conn.execute(
+            'UPDATE quizes SET question_number = ? WHERE id = ?', (question_number, quiz.id))
+        self.conn.execute(
+            'INSERT INTO answers (quiz_id, question_number, answer) VALUES (?, ?, ?)',
+            (quiz.id, question_number, answer))
+        self.conn.commit()
+        quiz.question_number = question_number
+        quiz.answers.append(answer)
 
     def _get_chat_data(self, chat_id):
         cur = self.conn.cursor()
         cur.execute('SELECT * FROM chats WHERE id = ?', (chat_id,))
         return cur.fetchone()
 
-    def _create_quiz_instance(self, type_, lang, answers):
+    def _create_quiz_instance(self, id, type_, lang, answers):
         if type_ == 'hars':
             quiz_class = HARSQuiz
             questions = HARS_QUESTIONS
         else:
             quiz_class = MADRSQuiz
             questions = MADRS_QUESTIONS
-        return quiz_class(questions, lang, question_number=len(answers), answers=answers)
+        return quiz_class(id, questions, lang, question_number=len(answers), answers=answers)
+
+    def _get_last_id(self):
+        return self.conn.execute('SELECT last_insert_rowid()').fetchone()[0]

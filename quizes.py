@@ -6,7 +6,8 @@ Question = namedtuple('Question', ['question', 'answers'])
 
 class BaseQuiz:
 
-    def __init__(self, questions, lang, question_number=0, answers=None):
+    def __init__(self, id, questions, lang, question_number=0, answers=None):
+        self.id = id
         self.questions = questions
         self.lang = lang
         self.question_number = question_number
