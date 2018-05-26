@@ -27,7 +27,6 @@ class QuizStorage:
         answers = []
         for answer in answers_data:
             answers.append(answer['answer'])
-        print(quiz_data['id'])
         return self._create_quiz_instance(quiz_data['id'], quiz_data['type'], chat_data['language'], answers)
 
     def create_quiz(self, chat_id, type_):
@@ -46,7 +45,6 @@ class QuizStorage:
 
     def save_answer(self, quiz, answer):
         question_number = quiz.question_number + 1
-        print(question_number, quiz.id)
         conn = self.get_conn()
         conn.execute(
             'UPDATE quizes SET question_number = ? WHERE id = ?', (question_number, quiz.id))
