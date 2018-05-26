@@ -54,6 +54,36 @@ class QuizStorageTestCase(TestCase):
         self.assertListEqual(quiz.answers, [0, 1, 2, 3, 4, 5, 6, 0, 1, 2])
         self.assertTrue(quiz.is_completed)
 
+    def test_create_quiz_returns_quiz_instance(self):
+        chat_id = 31337
+        self._insert_chat(chat_id, lang='en')
+        quiz = self.storage.create_quiz(chat_id, 'hars')
+        self.assertIsInstance(quiz, HARSQuiz)
+        self.assertDictEqual(quiz.questions, HARS_QUESTIONS)
+        self.assertEqual(quiz.lang, 'en')
+        self.assertEqual(quiz.question_number, 0)
+        self.assertFalse(quiz.is_completed)
+
+    def test_create_quiz_madrs_instance(self):
+        chat_id = 31337
+        self._insert_chat(chat_id, lang='ru')
+        quiz = self.storage.create_quiz(chat_id, 'madrs')
+        self.assertDictEqual(quiz.questions, MADRS_QUESTIONS)
+        self.assertEqual(quiz.lang, 'ru')
+        self.assertEqual(quiz.question_number, 0)
+        self.assertFalse(quiz.is_completed)
+
+    def test_create_quiz_inserts_quiz_to_db(self):
+        chat_id = 31337
+        self._insert_chat(chat_id, lang='ru')
+        quiz = self.storage.create_quiz(chat_id, 'madrs')
+        cur = self._get_connection().cursor()
+        cur.execute('SELECT * FROM quizes')
+        res = cur.fetchone()
+        self.assertEqual(res['chat_id'], str(chat_id))
+        self.assertEqual(res['type'], 'madrs')
+        self.assertEqual(res['question_number'], 0)
+
     def _insert_chat(self, chat_id, created_at='2018-05-20 12:26:00', frequency='daily', lang='en'):
         conn = self._get_connection()
         conn.execute("INSERT INTO chats VALUES (?, ?, ?, ?)", (chat_id, created_at, frequency, lang))
@@ -80,4 +110,6 @@ class QuizStorageTestCase(TestCase):
         return conn.execute("SELECT last_insert_rowid()").fetchone()[0]
 
     def _get_connection(self):
-        return sqlite3.connect(self.db_name)
+        conn = sqlite3.connect(self.db_name)
+        conn.row_factory = sqlite3.Row
+        return conn
