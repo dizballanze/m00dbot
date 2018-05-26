@@ -1,3 +1,4 @@
+import sys
 import sqlite3
 
 
@@ -40,4 +41,4 @@ def create_database(db_name):
 
 
 if __name__ == '__main__':
-    create_database('moodbot.db')
+    create_database(sys.argv[1])
