@@ -52,9 +52,8 @@ def process_frequency(bot, update):
 
 
 def send_intro(bot, chat_id):
-    bot.send_message(text='Chat bot description here\n\n/hars - Hamilton Anxiety Rating Scale\n'
-                     '/madrs - Montgomery–Åsberg Depression Rating Scale\n/start - settings',
-                     chat_id=chat_id)
+    lang = chat_storage.get_or_create(chat_id)['language']
+    bot.send_message(text=texts.INTRO[lang], chat_id=chat_id)
 
 
 def send_question(question, bot, chat_id):
