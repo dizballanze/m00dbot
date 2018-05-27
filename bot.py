@@ -4,7 +4,8 @@ import os
 from telegram.ext import Updater, CommandHandler, CallbackQueryHandler
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 
-from storage import QuizStorage
+from storage import QuizStorage, ChatStorage
+import texts
 
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.DEBUG)
@@ -24,15 +25,19 @@ def process_lang(bot, update):
     bot.edit_message_text(
         text="{}\n{}".format(query.message.text, query.data), chat_id=query.message.chat_id,
         message_id=query.message.message_id)
-    # Save language here
+    chat = chat_storage.get_or_create(query.message.chat_id)
+    chat['language'] = query.data
+    chat_storage.save(chat)
     send_frequency_question(bot, query.message.chat_id)
 
 
 def send_frequency_question(bot, chat_id):
+    lang = chat_storage.get_or_create(chat_id)['language']
     frequency_markup = InlineKeyboardMarkup([[
-        InlineKeyboardButton('None', callback_data='none'), InlineKeyboardButton('Daily', callback_data='daily'),
-        InlineKeyboardButton('Weekly', callback_data='weekly')]])
-    bot.send_message(text='Reminder frequency:', reply_markup=frequency_markup, chat_id=chat_id)
+        InlineKeyboardButton(texts.FREQUENCY_NONE[lang], callback_data='none'),
+        InlineKeyboardButton(texts.FREQUENCY_DAILY[lang], callback_data='daily'),
+        InlineKeyboardButton(texts.FREQUENCY_WEEKLY[lang], callback_data='weekly')]])
+    bot.send_message(text=texts.FREQUENCY_QUESTION[lang], reply_markup=frequency_markup, chat_id=chat_id)
 
 
 def process_frequency(bot, update):
@@ -40,7 +45,9 @@ def process_frequency(bot, update):
     bot.edit_message_text(
         text="{}\n{}".format(query.message.text, query.data), chat_id=query.message.chat_id,
         message_id=query.message.message_id)
-    # Save frequency here
+    chat = chat_storage.get_or_create(query.message.chat_id)
+    chat['frequency'] = query.data
+    chat_storage.save(chat)
     send_intro(bot, query.message.chat_id)
 
 
@@ -84,6 +91,7 @@ def process_answer(bot, update):
 
 if __name__ == '__main__':
     quiz_storage = QuizStorage(os.environ.get('DB_NAME'))
+    chat_storage = ChatStorage(os.environ.get('DB_NAME'))
     updater = Updater(token=os.environ.get('TG_TOKEN'))
     dispatcher = updater.dispatcher
     start_handler = CommandHandler('start', start)

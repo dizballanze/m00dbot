@@ -1,29 +1,16 @@
-import os
-import sqlite3
 import itertools
-from unittest import TestCase
 
+from tests.base import BaseTestCase
 from storage import QuizStorage
 from quizes import HARSQuiz, MADRSQuiz
-from create_db import create_database
 from questions import HARS_QUESTIONS, MADRS_QUESTIONS
 
 
-class QuizStorageTestCase(TestCase):
+class QuizStorageTestCase(BaseTestCase):
 
     def setUp(self):
         super().setUp()
-        self.db_name = 'test.db'
-        try:
-            os.unlink(self.db_name)
-        except OSError:
-            pass
-        create_database(self.db_name)
         self.storage = QuizStorage(self.db_name)
-
-    def tearDown(self):
-        os.unlink(self.db_name)
-        super().tearDown()
 
     def test_get_latest_quiz_semi_completed_hars(self):
         chat_id = 31337
@@ -103,33 +90,3 @@ class QuizStorageTestCase(TestCase):
         quiz_from_db = self.storage.get_latest_quiz(chat_id)
         self.assertEqual(quiz_from_db.question_number, 3)
         self.assertListEqual(quiz_from_db.answers, [0, 3, 1])
-
-    def _insert_chat(self, chat_id, created_at='2018-05-20 12:26:00', frequency='daily', lang='en'):
-        conn = self._get_connection()
-        conn.execute('INSERT INTO chats VALUES (?, ?, ?, ?)', (chat_id, created_at, frequency, lang))
-        conn.commit()
-        return chat_id
-
-    def _insert_quiz(self, chat_id, created_at='2018-05-20 12:30:00', type_='hars', question_number=0):
-        conn = self._get_connection()
-        conn.execute(
-            'INSERT INTO quizes (chat_id, created_at, type, question_number) VALUES (?, ?, ?, ?)',
-            (chat_id, created_at, type_, question_number))
-        conn.commit()
-        return self._get_last_id(conn)
-
-    def _insert_answer(self, quiz_id, question_number, answer):
-        conn = self._get_connection()
-        conn.execute(
-            'INSERT INTO answers (quiz_id, question_number, answer) VALUES (?, ?, ?)',
-            (quiz_id, question_number, answer))
-        conn.commit()
-        return self._get_last_id(conn)
-
-    def _get_last_id(self, conn):
-        return conn.execute('SELECT last_insert_rowid()').fetchone()[0]
-
-    def _get_connection(self):
-        conn = sqlite3.connect(self.db_name)
-        conn.row_factory = sqlite3.Row
-        return conn

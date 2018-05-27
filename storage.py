@@ -1,23 +1,27 @@
 import sqlite3
 import datetime
 
+from db_helpers import dict_factory
 from quizes import HARSQuiz, MADRSQuiz
 from questions import HARS_QUESTIONS, MADRS_QUESTIONS
 
 
-class QuizStorage:
+class BaseStorage:
 
     def __init__(self, db_name):
         self.db_name = db_name
 
     def get_conn(self):
         conn = sqlite3.connect(self.db_name)
-        conn.row_factory = sqlite3.Row
+        conn.row_factory = dict_factory
         return conn
+
+
+class QuizStorage(BaseStorage):
 
     def get_latest_quiz(self, chat_id):
         """ Return latest (by id) quiz for specified chat, return filled quiz instance """
-        chat_data = self._get_chat_data(chat_id)
+        chat_data = ChatStorage(self.db_name).get_chat(chat_id)
         cur = self.get_conn().cursor()
         cur.execute('SELECT * FROM quizes WHERE chat_id = ? ORDER BY id DESC', (chat_data['id'],))
         quiz_data = cur.fetchone()
@@ -29,16 +33,10 @@ class QuizStorage:
         return self._create_quiz_instance(quiz_data['id'], quiz_data['type'], chat_data['language'], answers)
 
     def create_quiz(self, chat_id, type_):
-        now_dt_formated = datetime.datetime.now().strftime('%Y-%m-%d %H-%M-%S')
-        chat_data = self._get_chat_data(chat_id)
+        chat_data = ChatStorage(self.db_name).get_chat(chat_id)
         conn = self.get_conn()
-        if chat_data is None:
-            conn.execute('INSERT INTO chats VALUES (?, ?, ?, ?)', (chat_id, now_dt_formated, 'daily', 'ru'))
-            conn.commit()
-            chat_data = self._get_chat_data(chat_id)
-        conn.execute(
-            'INSERT INTO quizes VALUES (?, ?, ?, ?, ?)',
-            (None, chat_id, now_dt_formated, type_, 0))
+        now_dt_formated = datetime.datetime.now().strftime('%Y-%m-%d %H-%M-%S')
+        conn.execute('INSERT INTO quizes VALUES (?, ?, ?, ?, ?)', (None, chat_id, now_dt_formated, type_, 0))
         conn.commit()
         return self._create_quiz_instance(self._get_last_id(conn), type_, chat_data['language'], [])
 
@@ -54,11 +52,6 @@ class QuizStorage:
         quiz.question_number = question_number
         quiz.answers.append(answer)
 
-    def _get_chat_data(self, chat_id):
-        cur = self.get_conn().cursor()
-        cur.execute('SELECT * FROM chats WHERE id = ?', (chat_id,))
-        return cur.fetchone()
-
     def _create_quiz_instance(self, id, type_, lang, answers):
         if type_ == 'hars':
             quiz_class = HARSQuiz
@@ -69,4 +62,29 @@ class QuizStorage:
         return quiz_class(id, questions, lang, question_number=len(answers), answers=answers)
 
     def _get_last_id(self, conn):
-        return conn.execute('SELECT last_insert_rowid()').fetchone()[0]
+        return conn.execute('SELECT last_insert_rowid() as id').fetchone()['id']
+
+
+class ChatStorage(BaseStorage):
+
+    def get_or_create(self, chat_id, language='en', frequency='none'):
+        chat_data = self.get_chat(chat_id)
+        if chat_data is None:
+            now_dt_formated = datetime.datetime.now().strftime('%Y-%m-%d %H-%M-%S')
+            conn = self.get_conn()
+            conn.execute('INSERT INTO chats VALUES (?, ?, ?, ?)', (chat_id, now_dt_formated, frequency, language))
+            conn.commit()
+            chat_data = self.get_chat(chat_id)
+        return chat_data
+
+    def get_chat(self, chat_id):
+        cur = self.get_conn().cursor()
+        cur.execute('SELECT * FROM chats WHERE id = ?', (chat_id,))
+        return cur.fetchone()
+
+    def save(self, chat_data):
+        conn = self.get_conn()
+        conn.execute(
+            'UPDATE chats SET frequency = ?, language = ? WHERE id = ?',
+            (chat_data['frequency'], chat_data['language'], chat_data['id']))
+        conn.commit()
