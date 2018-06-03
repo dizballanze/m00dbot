@@ -34,3 +34,10 @@ INTRO = {
           '/madrs - тест депрессии (Шкала Монтгомери-Асберга)\n'
           '/start - настройки'
 }
+
+PERIODIC_NOTIFICATION = {
+    'ru': 'Пора пройти тест ⏰\n\nНажмите:\n/hars для тестирования тревоги\n/madrs для тестирования депрессии\n'
+          '/start - для настройки уведомлений',
+    'en': 'It\'s time to take some tests ⏰\nP\nress :\n/hars for anxiety testing\n/madrs for deperession testing\n'
+          '/start for notification settings'
+}

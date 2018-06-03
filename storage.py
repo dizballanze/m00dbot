@@ -88,3 +88,8 @@ class ChatStorage(BaseStorage):
             'UPDATE chats SET frequency = ?, language = ? WHERE id = ?',
             (chat_data['frequency'], chat_data['language'], chat_data['id']))
         conn.commit()
+
+    def get_chats(self):
+        cur = self.get_conn().cursor()
+        cur.execute('SELECT * FROM chats')
+        return cur.fetchall()

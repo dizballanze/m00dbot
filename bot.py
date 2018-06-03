@@ -1,3 +1,4 @@
+from datetime import datetime
 import logging
 import os
 
@@ -9,6 +10,12 @@ import texts
 
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.DEBUG)
+
+
+def help(bot, update):
+    print(update.message.chat_id)
+    lang = chat_storage.get_or_create(update.message.chat_id)['language']
+    bot.send_message(text=texts.INTRO[lang], chat_id=update.message.chat_id)
 
 
 def start(bot, update):
@@ -88,13 +95,32 @@ def process_answer(bot, update):
         send_question(question, bot, query.message.chat_id)
 
 
+def periodic_notifiction_callback(bot, job):
+    for chat in chat_storage.get_chats():
+        if chat['frequency'] == 'none':
+            continue
+        created_at = datetime.strptime(chat['created_at'], '%Y-%m-%d %H-%M-%S')
+        now = datetime.now()
+        if created_at.hour != now.hour:
+            continue
+        if (chat['frequency'] == 'weekly') and (now.weekday() != created_at.weekday()):
+            continue
+        try:
+            bot.send_message(chat_id=chat['id'], text=texts.PERIODIC_NOTIFICATION[chat['language']])
+        except:
+            pass
+
+
 if __name__ == '__main__':
     quiz_storage = QuizStorage(os.environ.get('DB_NAME'))
     chat_storage = ChatStorage(os.environ.get('DB_NAME'))
     updater = Updater(token=os.environ.get('TG_TOKEN'))
     dispatcher = updater.dispatcher
+    updater.job_queue.run_repeating(periodic_notifiction_callback, interval=3600, first=0)
     start_handler = CommandHandler('start', start)
     dispatcher.add_handler(start_handler)
+    help_handler = CommandHandler('help', help)
+    dispatcher.add_handler(help_handler)
     updater.dispatcher.add_handler(CallbackQueryHandler(process_lang, pattern='(en|ru)'))
     updater.dispatcher.add_handler(CallbackQueryHandler(process_frequency, pattern='(none|daily|weekly)'))
     start_hars_quiz_handler = CommandHandler('hars', hars_quiz)
