@@ -4,6 +4,7 @@ import os
 
 from telegram.ext import Updater, CommandHandler, CallbackQueryHandler
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
+from telegram.error import BadRequest
 
 from storage import QuizStorage, ChatStorage
 import texts
@@ -107,7 +108,7 @@ def periodic_notifiction_callback(bot, job):
             continue
         try:
             bot.send_message(chat_id=chat['id'], text=texts.PERIODIC_NOTIFICATION[chat['language']])
-        except:
+        except BadRequest:
             pass
 
 
