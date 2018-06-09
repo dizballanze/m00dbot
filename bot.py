@@ -73,12 +73,16 @@ def send_question(question, bot, chat_id):
 def hars_quiz(bot, update):
     quiz = quiz_storage.create_quiz(update.message.chat_id, 'hars')
     question = quiz.get_question()
+    lang = chat_storage.get_or_create(update.message.chat_id)['language']
+    bot.send_message(text=texts.HARS_INTRO[lang], chat_id=update.message.chat_id)
     send_question(question, bot, update.message.chat_id)
 
 
 def madrs_quiz(bot, update):
     quiz = quiz_storage.create_quiz(update.message.chat_id, 'madrs')
     question = quiz.get_question()
+    lang = chat_storage.get_or_create(update.message.chat_id)['language']
+    bot.send_message(text=texts.MADRS_INTRO[lang], chat_id=update.message.chat_id)
     send_question(question, bot, update.message.chat_id)
 
 
