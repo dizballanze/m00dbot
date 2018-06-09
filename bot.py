@@ -64,7 +64,7 @@ def send_intro(bot, chat_id):
     bot.send_message(text=texts.INTRO[lang], chat_id=chat_id)
 
 
-def send_question(question, bot, chat_id):
+def send_hars_question(question, bot, chat_id):
     keyboard = [[InlineKeyboardButton(answer, callback_data=i)] for i, answer in enumerate(question.answers)]
     reply_markup = InlineKeyboardMarkup(keyboard)
     bot.send_message(text=question.question, reply_markup=reply_markup, chat_id=chat_id)
@@ -75,7 +75,14 @@ def hars_quiz(bot, update):
     question = quiz.get_question()
     lang = chat_storage.get_or_create(update.message.chat_id)['language']
     bot.send_message(text=texts.HARS_INTRO[lang], chat_id=update.message.chat_id)
-    send_question(question, bot, update.message.chat_id)
+    send_hars_question(question, bot, update.message.chat_id)
+
+
+def send_madrs_question(question, bot, chat_id):
+    keyboard = [[InlineKeyboardButton(str(i), callback_data=i) for i in range(0, 7)]]
+    reply_markup = InlineKeyboardMarkup(keyboard)
+    question_text = '{}\n{}'.format(question.question, '\n'.join(question.answers))
+    bot.send_message(text=question_text, reply_markup=reply_markup, chat_id=chat_id)
 
 
 def madrs_quiz(bot, update):
@@ -83,7 +90,7 @@ def madrs_quiz(bot, update):
     question = quiz.get_question()
     lang = chat_storage.get_or_create(update.message.chat_id)['language']
     bot.send_message(text=texts.MADRS_INTRO[lang], chat_id=update.message.chat_id)
-    send_question(question, bot, update.message.chat_id)
+    send_madrs_question(question, bot, update.message.chat_id)
 
 
 def process_answer(bot, update):
@@ -97,7 +104,10 @@ def process_answer(bot, update):
         bot.send_message(chat_id=query.message.chat_id, text="🏁\n{}".format(quiz.get_result()))
     else:
         question = quiz.get_question()
-        send_question(question, bot, query.message.chat_id)
+        if quiz.type_ == 'hars':
+            send_hars_question(question, bot, query.message.chat_id)
+        else:
+            send_madrs_question(question, bot, query.message.chat_id)
 
 
 def periodic_notifiction_callback(bot, job):

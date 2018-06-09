@@ -38,6 +38,8 @@ class HARSQuiz(BaseQuiz):
         'ru': ['отсутствие тревоги 👍', 'средняя выраженность тревожного расстройства 😐', 'тяжелая тревога 😦'],
         'en': ['mild anxiety severity', 'mild to moderate anxiety severity', 'moderate to severe anxiety severity']}
 
+    type_ = 'hars'
+
     def get_question(self):
         return Question(
             "\u2753({}/{}) {}".format(
@@ -69,6 +71,8 @@ class MADRSQuiz(BaseQuiz):
     RESULTS = {
         'en': ['normal 👍', 'mild depression 😐', 'moderate depression 😔', 'severe depression 😨'],
         'ru': ['норма 👍', 'слабая депрессия 😐', 'умеренная депрессия 😔', 'тяжелая депрессия 😨']}
+
+    type_ = 'madrs'
 
     def get_question(self):
         return Question(
