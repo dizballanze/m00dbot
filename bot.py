@@ -7,6 +7,7 @@ from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.error import BadRequest
 
 from storage import QuizStorage, ChatStorage
+from export import get_quizes_plot, get_csv
 import texts
 
 
@@ -126,6 +127,28 @@ def periodic_notifiction_callback(bot, job):
             pass
 
 
+def export(bot, update):
+    keyboard = [[InlineKeyboardButton('PNG', callback_data='png'), InlineKeyboardButton('CSV', callback_data='csv')]]
+    reply_markup = InlineKeyboardMarkup(keyboard)
+    lang = chat_storage.get_or_create(update.message.chat_id)['language']
+    bot.send_message(text=texts.EXPORT[lang], reply_markup=reply_markup, chat_id=update.message.chat_id)
+
+
+def process_export(bot, update):
+    query = update.callback_query
+    bot.edit_message_text(
+        text="{} {}".format(query.message.text, query.data), chat_id=query.message.chat_id,
+        message_id=query.message.message_id)
+    if query.data == 'png':
+        quizes = quiz_storage.get_completed_quizes(query.message.chat_id)
+        plot = get_quizes_plot(quizes)
+        bot.send_photo(chat_id=query.message.chat_id, photo=plot)
+    if query.data == 'csv':
+        quizes = quiz_storage.get_completed_quizes(query.message.chat_id, limit=999)
+        csv_buf = get_csv(quizes)
+        bot.send_document(chat_id=query.message.chat_id, document=csv_buf, filename='m00d.csv')
+
+
 if __name__ == '__main__':
     quiz_storage = QuizStorage(os.environ.get('DB_NAME'))
     chat_storage = ChatStorage(os.environ.get('DB_NAME'))
@@ -143,4 +166,7 @@ if __name__ == '__main__':
     start_madrs_quiz_handler = CommandHandler('madrs', madrs_quiz)
     dispatcher.add_handler(start_madrs_quiz_handler)
     updater.dispatcher.add_handler(CallbackQueryHandler(process_answer, pattern='\d+'))  # noqa
+    export_handler = CommandHandler('export', export)
+    dispatcher.add_handler(export_handler)
+    updater.dispatcher.add_handler(CallbackQueryHandler(process_export, pattern='(png|csv)'))
     updater.start_polling()

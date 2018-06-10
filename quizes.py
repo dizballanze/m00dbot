@@ -6,12 +6,13 @@ Question = namedtuple('Question', ['question', 'answers'])
 
 class BaseQuiz:
 
-    def __init__(self, id, questions, lang, question_number=0, answers=None):
+    def __init__(self, id, questions, lang, question_number=0, answers=None, created_at=None):
         self.id = id
         self.questions = questions
         self.lang = lang
         self.question_number = question_number
         self.answers = [] if answers is None else answers
+        self.created_at = created_at
 
     def get_question(self):
         raise NotImplementedError
@@ -22,6 +23,10 @@ class BaseQuiz:
 
     def get_result(self):
         raise NotImplementedError
+
+    @property
+    def result(self):
+        return sum(self.answers)
 
     @property
     def is_completed(self):
@@ -50,16 +55,15 @@ class HARSQuiz(BaseQuiz):
     def get_result(self):
         if not self.is_completed:
             raise ValueError("Can't calculate result for incomplete test")
-        result = sum(self.answers)
-        if result <= 17:
+        if self.result <= 17:
             description = self.RESULTS[self.lang][0]
-        elif result <= 24:
+        elif self.result <= 24:
             description = self.RESULTS[self.lang][1]
         else:
             description = self.RESULTS[self.lang][2]
         return '{}:\n{}/{}\n{}'.format(
             'Результат' if self.lang == 'ru' else 'Result',
-            result, self.questions_count * 4, description)
+            self.result, self.questions_count * 4, description)
 
     @property
     def questions_count(self):
@@ -84,18 +88,17 @@ class MADRSQuiz(BaseQuiz):
     def get_result(self):
         if not self.is_completed:
             raise ValueError("Can't calculate result for incomplete test")
-        result = sum(self.answers)
-        if result <= 6:
+        if self.result <= 6:
             description = self.RESULTS[self.lang][0]
-        elif result <= 19:
+        elif self.result <= 19:
             description = self.RESULTS[self.lang][1]
-        elif result <= 34:
+        elif self.result <= 34:
             description = self.RESULTS[self.lang][2]
         else:
             description = self.RESULTS[self.lang][3]
         return '{}:\n{}/{}\n{}'.format(
             'Результат' if self.lang == 'ru' else 'Result',
-            result, self.questions_count * 6, description)
+            self.result, self.questions_count * 6, description)
 
     @property
     def questions_count(self):

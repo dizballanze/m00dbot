@@ -25,12 +25,25 @@ class QuizStorage(BaseStorage):
         cur = self.get_conn().cursor()
         cur.execute('SELECT * FROM quizes WHERE chat_id = ? ORDER BY id DESC', (chat_data['id'],))
         quiz_data = cur.fetchone()
-        cur.execute('SELECT * FROM answers WHERE quiz_id = ? ORDER BY question_number ASC', (quiz_data['id'],))
-        answers_data = cur.fetchall()
-        answers = []
-        for answer in answers_data:
-            answers.append(answer['answer'])
-        return self._create_quiz_instance(quiz_data['id'], quiz_data['type'], chat_data['language'], answers)
+        return self._create_quiz_instance(
+            quiz_data['id'], quiz_data['type'], chat_data['language'], chat_data['created_at'])
+
+    def get_completed_quizes(self, chat_id, limit=10):
+        chat_data = ChatStorage(self.db_name).get_chat(chat_id)
+        cur = self.get_conn().cursor()
+        cur.execute(
+            "SELECT * FROM quizes WHERE (chat_id = ?) AND "
+            "(type = 'madrs' and question_number >= 9) ORDER BY id LIMIT ?", (chat_data['id'], limit))
+        quizes_data = list(cur.fetchall())
+        cur.execute(
+            "SELECT * FROM quizes WHERE (chat_id = ?) AND (type = 'hars' AND question_number >= 13) "
+            "ORDER BY id LIMIT ?", (chat_data['id'], limit))
+        quizes_data += list(cur.fetchall())
+        quiz_instances = []
+        for quiz_data in quizes_data:
+            quiz_instances.append(self._create_quiz_instance(
+                quiz_data['id'], quiz_data['type'], chat_data['language'], quiz_data['created_at']))
+        return quiz_instances
 
     def create_quiz(self, chat_id, type_):
         chat_data = ChatStorage(self.db_name).get_chat(chat_id)
@@ -52,14 +65,20 @@ class QuizStorage(BaseStorage):
         quiz.question_number = question_number
         quiz.answers.append(answer)
 
-    def _create_quiz_instance(self, id, type_, lang, answers):
+    def _create_quiz_instance(self, id, type_, lang, created_at=None):
+        cur = self.get_conn().cursor()
+        cur.execute('SELECT * FROM answers WHERE quiz_id = ? ORDER BY question_number ASC', (id,))
+        answers_data = cur.fetchall()
+        answers = []
+        for answer in answers_data:
+            answers.append(answer['answer'])
         if type_ == 'hars':
             quiz_class = HARSQuiz
             questions = HARS_QUESTIONS
         else:
             quiz_class = MADRSQuiz
             questions = MADRS_QUESTIONS
-        return quiz_class(id, questions, lang, question_number=len(answers), answers=answers)
+        return quiz_class(id, questions, lang, question_number=len(answers), answers=answers, created_at=created_at)
 
     def _get_last_id(self, conn):
         return conn.execute('SELECT last_insert_rowid() as id').fetchone()['id']
