@@ -23,6 +23,12 @@ python create_db.py <database file name>
 TG_TOKEN="<telegram bot token>" DB_NAME="<database file name>" python bot.py
 ```
 
+## Screenshots
+
+![](screenshots/001.png)
+![](screenshots/002.png)
+![](screenshots/003.png)
+
 ## License
 
 MIT License
