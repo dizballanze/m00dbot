@@ -2,7 +2,10 @@ from datetime import datetime
 import logging
 import os
 
+import telegram.bot
 from telegram.ext import Updater, CommandHandler, CallbackQueryHandler
+from telegram.ext import messagequeue as mq
+from telegram.utils.request import Request
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.error import BadRequest
 
@@ -149,10 +152,38 @@ def process_export(bot, update):
         bot.send_document(chat_id=query.message.chat_id, document=csv_buf, filename='m00d.csv')
 
 
+class MQBot(telegram.bot.Bot):
+
+    """ A subclass of Bot which delegates send method handling to MQ """
+
+    def __init__(self, *args, is_queued_def=True, mqueue=None, **kwargs):
+        super(MQBot, self).__init__(*args, **kwargs)
+        self._is_messages_queued_default = is_queued_def
+        self._msg_queue = mqueue or mq.MessageQueue()
+
+    def __del__(self):
+        try:
+            self._msg_queue.stop()
+        except:
+            pass
+        super(MQBot, self).__del__()
+
+    @mq.queuedmessage
+    def send_message(self, *args, **kwargs):
+        return super(MQBot, self).send_message(*args, **kwargs)
+
+    @mq.queuedmessage
+    def edit_message_text(self, *args, **kwargs):
+        return super().edit_message_text(*args, **kwargs)
+
+
 if __name__ == '__main__':
     quiz_storage = QuizStorage(os.environ.get('DB_NAME'))
     chat_storage = ChatStorage(os.environ.get('DB_NAME'))
-    updater = Updater(token=os.environ.get('TG_TOKEN'))
+    q = mq.MessageQueue(all_burst_limit=3, all_time_limit_ms=3000)
+    request = Request(con_pool_size=8)
+    m00dbot = MQBot(os.environ.get('TG_TOKEN'), request=request, mqueue=q)
+    updater = Updater(bot=m00dbot)
     dispatcher = updater.dispatcher
     updater.job_queue.run_repeating(periodic_notifiction_callback, interval=3600, first=0)
     start_handler = CommandHandler('start', start)
