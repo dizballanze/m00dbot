@@ -21,7 +21,8 @@ def get_quizes_plot(quizes):
         x = [datetime.strptime(quiz.created_at, '%Y-%m-%d %H-%M-%S') for quiz in quizes if quiz.type_ == type_]
         print(x)
         y = [quiz.result for quiz in quizes if quiz.type_ == type_]
-        ax.plot(x, y)
+        ax.plot(x, y, label=type_.upper())
+    ax.legend()
     sns.despine()
     buf = io.BytesIO()
     plt.savefig(buf, format='png')
