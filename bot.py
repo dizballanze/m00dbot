@@ -162,10 +162,7 @@ class MQBot(telegram.bot.Bot):
         self._msg_queue = mqueue or mq.MessageQueue()
 
     def __del__(self):
-        try:
-            self._msg_queue.stop()
-        except:
-            pass
+        self._msg_queue.stop()
         super(MQBot, self).__del__()
 
     @mq.queuedmessage
