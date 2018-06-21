@@ -177,7 +177,7 @@ class MQBot(telegram.bot.Bot):
 if __name__ == '__main__':
     quiz_storage = QuizStorage(os.environ.get('DB_NAME'))
     chat_storage = ChatStorage(os.environ.get('DB_NAME'))
-    q = mq.MessageQueue(all_burst_limit=3, all_time_limit_ms=3000)
+    q = mq.MessageQueue(all_burst_limit=30, all_time_limit_ms=3000)
     request = Request(con_pool_size=8)
     m00dbot = MQBot(os.environ.get('TG_TOKEN'), request=request, mqueue=q)
     updater = Updater(bot=m00dbot)
