@@ -49,7 +49,7 @@ HARS_INTRO = {
     'en': 'Below is a list of phrases that describe certain feeling that people have. Rate the patients by finding '
           'the answer which best describes the extent to which he/she has these conditions.',
     'ru': 'Ниже список фраз, описывающих определенные чувства, которые испытывают люди. Оцените пациента, '
-          'выбрав ответ, который лучше всего'
+          'выбрав ответ, который лучше всего '
           'описывает степень в которой он/она находится.'
 }
 
