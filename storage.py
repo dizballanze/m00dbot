@@ -33,16 +33,14 @@ class QuizStorage(BaseStorage):
         chat_data = ChatStorage(self.db_name).get_chat(chat_id)
         cur = self.get_conn().cursor()
         cur.execute(
-            "SELECT * FROM quizes "
-            "WHERE (chat_id = ?) AND (type = 'madrs' and question_number >= 9) "
-            "ORDER BY id ? LIMIT ?",
-            (chat_data['id'], order, limit))
+            "SELECT * FROM quizes WHERE (chat_id = ?) AND (type = 'madrs') AND (question_number >= 9) "
+            "ORDER BY id {} LIMIT ?".format(order),
+            (chat_data['id'], limit))
         quizes_data = list(cur.fetchall())
         cur.execute(
-            "SELECT * FROM quizes "
-            "WHERE (chat_id = ?) AND (type = 'hars' AND question_number >= 13) "
-            "ORDER BY id ? LIMIT ?",
-            (chat_data['id'], order, limit))
+            "SELECT * FROM quizes WHERE (chat_id = ?) AND (type = 'hars') AND (question_number >= 13) "
+            "ORDER BY id {} LIMIT ?".format(order),
+            (chat_data['id'], limit))
         quizes_data += list(cur.fetchall())
         quiz_instances = []
         for quiz_data in quizes_data:
