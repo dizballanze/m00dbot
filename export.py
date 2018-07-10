@@ -19,7 +19,6 @@ def get_quizes_plot(quizes):
     ax.xaxis.set_major_formatter(dates_fmt)
     for type_ in ('hars', 'madrs'):
         x = [datetime.strptime(quiz.created_at, '%Y-%m-%d %H-%M-%S') for quiz in quizes if quiz.type_ == type_]
-        print(x)
         y = [quiz.result for quiz in quizes if quiz.type_ == type_]
         ax.plot(x, y, label=type_.upper())
     ax.legend()
