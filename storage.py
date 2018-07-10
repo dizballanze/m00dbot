@@ -28,16 +28,27 @@ class QuizStorage(BaseStorage):
         return self._create_quiz_instance(
             quiz_data['id'], quiz_data['type'], chat_data['language'], chat_data['created_at'])
 
-    def get_completed_quizes(self, chat_id, limit=10):
+    def get_completed_quizes(self, chat_id, **kwargs):
+        order, limit = kwargs.get('order', 'ASC'), kwargs.get('limit', '30')
         chat_data = ChatStorage(self.db_name).get_chat(chat_id)
         cur = self.get_conn().cursor()
         cur.execute(
-            "SELECT * FROM quizes WHERE (chat_id = ?) AND "
-            "(type = 'madrs' and question_number >= 9) ORDER BY id LIMIT ?", (chat_data['id'], limit))
+            "SELECT * "
+            "FROM quizes "
+            "WHERE (chat_id = ?) AND (type = 'madrs' and question_number >= 9) "
+            "ORDER BY id ?"
+            "LIMIT ?",
+            (chat_data['id'], order, limit)
+        )
         quizes_data = list(cur.fetchall())
         cur.execute(
-            "SELECT * FROM quizes WHERE (chat_id = ?) AND (type = 'hars' AND question_number >= 13) "
-            "ORDER BY id LIMIT ?", (chat_data['id'], limit))
+            "SELECT * "
+            "FROM quizes "
+            "WHERE (chat_id = ?) AND (type = 'hars' AND question_number >= 13) "
+            "ORDER BY id ? "
+            "LIMIT ?",
+            (chat_data['id'], order, limit)
+        )
         quizes_data += list(cur.fetchall())
         quiz_instances = []
         for quiz_data in quizes_data:
