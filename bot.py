@@ -143,7 +143,7 @@ def process_export(bot, update):
         text="{} {}".format(query.message.text, query.data), chat_id=query.message.chat_id,
         message_id=query.message.message_id)
     if query.data == 'png':
-        quizes = quiz_storage.get_completed_quizes(query.message.chat_id)
+        quizes = quiz_storage.get_completed_quizes(query.message.chat_id, order='DESC')
         plot = get_quizes_plot(quizes)
         bot.send_photo(chat_id=query.message.chat_id, photo=plot)
     if query.data == 'csv':
