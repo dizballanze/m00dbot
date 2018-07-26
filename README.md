@@ -1,6 +1,7 @@
 # Depression and anxiety self-testing telegram bot
 
 [![Build Status](https://travis-ci.org/dizballanze/m00dbot.svg?branch=master)](https://travis-ci.org/dizballanze/m00dbot)
+[![Say Thanks!](https://img.shields.io/badge/Say%20Thanks-!-1EAEDB.svg)](https://saythanks.io/to/dizballanze)
 
 Telegram [bot](https://t.me/m00dbot) for self-testing of depression and anxiety.
 
