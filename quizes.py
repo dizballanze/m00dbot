@@ -41,7 +41,8 @@ class HARSQuiz(BaseQuiz):
 
     RESULTS = {
         'ru': ['отсутствие тревоги 👍', 'средняя выраженность тревожного расстройства 😐', 'тяжелая тревога 😦'],
-        'en': ['mild anxiety severity', 'mild to moderate anxiety severity', 'moderate to severe anxiety severity']}
+        'en': ['mild anxiety severity 👍', 'mild to moderate anxiety severity 😐', 'moderate to severe anxiety severity 😦'],
+        'pt': ['ansiedade leve 👍', 'ansiedade leve a moderada 😐', 'ansiedade moderada a severa 😦']}
 
     type_ = 'hars'
 
@@ -74,7 +75,8 @@ class MADRSQuiz(BaseQuiz):
 
     RESULTS = {
         'en': ['normal 👍', 'mild depression 😐', 'moderate depression 😔', 'severe depression 😨'],
-        'ru': ['норма 👍', 'слабая депрессия 😐', 'умеренная депрессия 😔', 'тяжелая депрессия 😨']}
+        'ru': ['норма 👍', 'слабая депрессия 😐', 'умеренная депрессия 😔', 'тяжелая депрессия 😨'],
+        'en': ['normal 👍', 'depressão leve 😐', 'depressão moderada 😔', 'depressão severa 😨']}
 
     type_ = 'madrs'
 
