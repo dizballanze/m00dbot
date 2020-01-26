@@ -36,6 +36,25 @@ HARS_QUESTIONS = {
             "Autonomic symptoms. Dry mouth, flushing, pallor, tendency to sweat, giddiness, tension headache, raising of hair",
             "Behavior at Interview. Fidgeting, restlessness or pacing, tremor of hands, furrowed brow, strained face, sighing or rapid respiration, facial pallor, swallowing, belching, brisk tendon jerks, dilated pupils, exophthalmos"
         ]
+    },
+    "pt": {
+        "answers": ["Nenhuma", "Leve", "Moderada", "Severa", "Muito severa"],
+        "questions": [
+            "Ansioso(a). Preocupações, antecipação do pior, antecipação temerosa, irritabilidade",
+            "Tensão. Sentimentos de tensão, fatigabilidade, sobressalto, choro repentino, tremor, sentimentos de inquietação, inabilidade para relaxar",
+            "Medos. Do escuro, de estranhos, de ficar sozinho(a), de animais, do trânsito, de multidões",
+            "Insônia. Dificuldade de cair no sono, sono intermitente, sono insatisfatório e despertar cansado(a), sonhos, pesadelos, terrores noturnos",
+            "Intelectual. Dificuldade de concentração, memória fraca",
+            "Humor depressivo. Perca de interesse, falta de prazer em hobbies, depressão, acorda cedo, variações de humor diurnas",
+            "Sintomas musculares. Dores , espasmos, rigidez, mioclonia, ranger de dentes, voz trêmula, aumento de tônus muscular",
+            "Sintomas sensorias. Zumbido, visão turva, rubores quentes e frios, sentimentos de fraquezas, formigamento",
+            "Sintomas cardiovasculares. Taquicardia, palpitações, dor no peito, pulsação de vasos, desfalecimento, falta de batimento",
+            "Sintomas respiratórios. Pressão e constrição no peito, asfixia, suspiro, dispineia",
+            "Sintomas Gastrointestinais. Difilculdade para engolir, fôlego, dor abdominal, queimações, sensação de estômago cheio, náusea, vômitos, burburinho, frouxidão, perda de peso, constipação",
+            "Sintomas Geniturinários. Frequência de micção, urgência de micção, amenorreia, menorragia, frigidez, ejaculação precoce, perda de libido, impotência",
+            "Sintomas autonômicos. Boca seca, rubor, palidez, tendência ao suor, vertigem, dor de cabeça tensional, aumento capilar",
+            "Comportamento na Entrevista. Inquietação, inquietação ou ritmo, tremor das mãos, sobrancelha franzida, rosto tenso, suspiro ou respiração rápida, palidez facial, deglutição, arroto, contrações nos tendões, pupilas dilatadas, exoftalmia"
+        ]
     }
 }
 
@@ -123,6 +142,48 @@ MADRS_QUESTIONS = {
         {
             "question": "Suicidal Thoughts. Representing the feeling that life is not worth living, that a natural death would be welcome, suicidal thoughts, and preparations for suicide. Suicidal attempts should not in themselves influence the rating",
             "answers": ["0 = Enjoys life or takes it as it comes", "1 =", "2 = Weary of life. Only fleeting suicidal thoughts", "3 =", "4 = Probably better off dead. Suicidal thoughts are common, and suicide is considered as a possible solution, but without specific plans or intention", "5 =", "6 = Explicit plans for suicide when there is an opportunity. Active preparations for suicide"]
+        }
+    ],
+    "pt": [
+        {
+            "question": "Tristeza Aparente. Representando desânimo, melancolia e desespero, (mais que apenas um desânimo transitório) refletido no discurso, expressão facial e postura. Classifique pela profundidade e incapacidade de melhorar",
+            "answers": ["0 = Não apresenta tristeza", "1 =", "2 = Parece desanimado(a), mas melhora sem dificuldade", "3 =", "4 = Parece triste e infeliz na maior parte do tempo", "5 =", "6 = Parece miserável o tempo todo. Extremamente desanimado(a)"]
+        },
+        {
+            "question": "Tristeza Relatada. Representando relatos de humor depressivo, independentemente de refletir ou não na aparência. Inclue desânimo, abatimento ou sentimento de estar além da ajuda e desesperançoso(a). Classifique de acordo com a intensidade, duração e extensão em que o humor é relatado ser influenciado por eventos",
+            "answers": ["0 = Tristeza ocasional de acordo com as circunstâncias", "1 =", "2 = Tristeza ou desânimo, mas melhora sem dificuldade", "3 =", "4 = Sentimentos penetrantes de tristeza ou melancolia. O humor ainda é influenciado por fatores externos", "5 =", "6 = Tristeza contínua ou invariável, angústia ou desânimo"]
+        },
+        {
+            "question": "Tensão Interna. Representando sentimentos de desconforto mal definidos, nervosismo, turbulência interior, tensão mental gerando pânico, pavor ou angústia. Classifique de acordo com a intensidade, frequência duração e extensão com que reaparecem",
+            "answers": ["0 = Tranquilo. Apenas tensão interna transitória", "1 =", "2 = Sentimentos ocasionais de nervosismo e desconforto mal definido", "3 =", "4 = Sentimentos contínuos de tensão interna ou pânico intermitente que o(a) paciente domina apenas com alguma dificuldade", "5 =", "6 = Pavor ou angústia implacáveis. Pânico esmagador"]
+        },
+        {
+            "question": "Sono Reduzido. Representando a experiência de sono com menor duração ou pronfundidade se comparado ao padrão de quando está bem",
+            "answers": ["0 = Dorme como de costume", "1 =", "2 = Pequena dificuldade para cair no sono ou sono levemente reduzido, leve ou inquieto", "3 =", "4 = Sono reduzido ou quebrado a pelo menos duas horas", "5 =", "6 = Menos que duas ou três horas totais de sono"]
+        },
+        {
+            "question": "Apetite Reduzido. Representando o sentimento de perda do apetite se comparado a quando está bem. Classifique pela perda do desejo de comer ou a necessidade de se forçar a comer",
+            "answers": ["0 = Apetite normal ou maior que o normal", "1 =", "2 = Apetite levemente reduzido", "3 =", "4 = Sem apetite. A comida é sem sabor", "5 =", "6 = Precisa ser convencido(a) a comer"]
+        },
+        {
+            "question": "Dificuldades de Concentração. Representando dificuldades em ordenar seus pensamentos levando a uma falta de concentração incapacitante. Classifique de acordo com a intensidade, frequência e grau de incapacidade produzidos",
+            "answers": ["0 = Sem dificuldades de concentração", "1 =", "2 = Dificuldade ocasional em ordenar seus pensamentos", "3 =", "4 = Dificuldades de concentração e de manter seus pensamentos que reduzem sua habilidade de ler e de manter um diálogo", "5 =", "6 = Incapaz de ler ou de conversar sem grande dificuldade"]
+        },
+        {
+            "question": "Lassitude. Representando uma dificuldade de começar ou uma demora em iniciar suas tarefas diárias",
+            "answers": ["0 = Raramente possue dificuldades em iniciar coisas. Sem lentidão", "1 =", "2 = Dificuldades em iniciar atividades", "3 =", "4 = Dificuldades em iniciar tarefas simples do dia a dia, que são executadas com esforço", "5 =", "6 = Lassitude completa. Incapaz de fazer qualquer coisa sem ajuda"]
+        },
+        {
+            "question": "Inabilidade de Sentir. Representando a experiência subjetiva da redução de interesse no que tem ao redor ou nas atividades que nomalmente davam prazer. A habilidade de reagir com emoção adequada às circunstâncias ou pessoas é reduzida",
+            "answers": ["0 = Interesse normal no entorno e nos outros", "1 = ", "2 = Habilidade reduzida de aproveitar interesses comuns", "3 =", "4 = Perda de interesse no entorno. Perda de sentimentos por amigos e conhecidos", "5 =", "6 = A experiência de estar emocionalmente paralisado, incapacidade de sentir raiva, luto ou prazer e uma completa ou até dolorosa falha em sentir por parentes e amigos"]
+        },
+        {
+            "question": "Pensamentos Pessimistas. Representando sentimentos de culpa, inferioridade, autodesaprovação, pecaminosidade, remorso e ruína",
+            "answers": ["0 = Sem pensamentos pessimistas", "1 =", "2 = Ideias flutuantes de falha, autodesaprovação ou autodepreciação", "3 =", "4 = Autoacusações presistentes, ou ideias definitivas, mas ainda racionais, de culpa ou pecado. Cada vez mais pessimista sobre o futuro", "5 =", "6 = Ilusão de ruína, remorso e pecado irrecuperáveis. Autoacusações que são absurdas e inabaláveis"]
+        },
+        {
+            "question": "Pensamentos Suicidas. Representando o sentimento de que a vida não vale a pena, que uma morte natural seria bem vinda, pensamentos suicidas e preparação para o suicídio. Tentativas de suicídio não devem, por si só, influenciar a classificação",
+            "answers": ["0 = Gosta da vida ou lida com uma coisa de cada vez", "1 =", "2 = Cansado(a) da vida. Apenas pensamentos suicidas efêmeros", "3 =", "4 = Provavelmente seria melhor a morte. Pensamentos suicidas são comuns e suicídio é considerado uma solução possível, mas sem planos específicos ou intenção", "5 =", "6 = Planos explícitos para o suicídio quando há uma oportunidade. Preparações ativas para o suicídio"]
         }
     ]
 }
