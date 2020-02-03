@@ -27,9 +27,10 @@ def start(bot, update):
     # Select language
     langs_markup = InlineKeyboardMarkup([[
         InlineKeyboardButton('English {}'.format(b'\xF0\x9F\x87\xAC\xF0\x9F\x87\xA7'.decode()), callback_data='en'),
-        InlineKeyboardButton('Русский {}'.format(b'\xF0\x9F\x87\xB7\xF0\x9F\x87\xBA'.decode()), callback_data='ru')]])
+        InlineKeyboardButton('Русский {}'.format(b'\xF0\x9F\x87\xB7\xF0\x9F\x87\xBA'.decode()), callback_data='ru'),
+        InlineKeyboardButton('Русский {}'.format(b'\xF0\x9F\x87\xB7\xF0\x9F\x87\xBA'.decode()), callback_data='pt')]])
     bot.send_message(
-        text='Choose your language / Выберите язык', reply_markup=langs_markup, chat_id=update.message.chat_id)
+        text='Choose your language / Выберите язык / Escolha seu idioma', reply_markup=langs_markup, chat_id=update.message.chat_id)
 
 
 def process_lang(bot, update):
