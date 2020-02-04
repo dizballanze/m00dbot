@@ -141,5 +141,8 @@ Session.vim
 # auto-generated tag files
 tags
 
+### Visual Studio Code ###
+.vscode/
+
 
 # End of https://www.gitignore.io/api/python,osx,vim
