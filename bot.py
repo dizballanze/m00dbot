@@ -188,7 +188,7 @@ if __name__ == '__main__':
     dispatcher.add_handler(start_handler)
     help_handler = CommandHandler('help', help)
     dispatcher.add_handler(help_handler)
-    updater.dispatcher.add_handler(CallbackQueryHandler(process_lang, pattern='(en|ru)'))
+    updater.dispatcher.add_handler(CallbackQueryHandler(process_lang, pattern='(en|ru|pt)'))
     updater.dispatcher.add_handler(CallbackQueryHandler(process_frequency, pattern='(none|daily|weekly)'))
     start_hars_quiz_handler = CommandHandler('hars', hars_quiz)
     dispatcher.add_handler(start_hars_quiz_handler)
