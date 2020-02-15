@@ -40,7 +40,7 @@ HARS_QUESTIONS = {
     "pt": {
         "answers": ["Nenhuma", "Leve", "Moderada", "Severa", "Muito severa"],
         "questions": [
-            "Ansioso(a). Preocupações, antecipação do pior, antecipação temerosa, irritabilidade",
+            "Ansiedade. Preocupações, antecipação do pior, antecipação temerosa, irritabilidade",
             "Tensão. Sentimentos de tensão, fatigabilidade, sobressalto, choro repentino, tremor, sentimentos de inquietação, inabilidade para relaxar",
             "Medos. Do escuro, de estranhos, de ficar sozinho(a), de animais, do trânsito, de multidões",
             "Insônia. Dificuldade de cair no sono, sono intermitente, sono insatisfatório e despertar cansado(a), sonhos, pesadelos, terrores noturnos",
