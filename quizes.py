@@ -76,7 +76,7 @@ class MADRSQuiz(BaseQuiz):
     RESULTS = {
         'en': ['normal 👍', 'mild depression 😐', 'moderate depression 😔', 'severe depression 😨'],
         'ru': ['норма 👍', 'слабая депрессия 😐', 'умеренная депрессия 😔', 'тяжелая депрессия 😨'],
-        'en': ['normal 👍', 'depressão leve 😐', 'depressão moderada 😔', 'depressão severa 😨']}
+        'pt': ['normal 👍', 'depressão leve 😐', 'depressão moderada 😔', 'depressão severa 😨']}
 
     type_ = 'madrs'
 
