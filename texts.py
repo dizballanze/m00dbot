@@ -54,7 +54,8 @@ PERIODIC_NOTIFICATION = {
           '/start - для настройки уведомлений',
     'en': 'It\'s time to take some tests ⏰\nP\nress :\n/hars for anxiety testing\n/madrs for deperession testing\n'
           '/start for notification settings',
-    'pt': 'Hora de tomar alguns testes ⏰\nDigite :\n/hars para o teste de ansiedade\n/madrs para o teste de depressão\n'
+    'pt': 'Hora de tomar alguns testes ⏰\nDigite :\n'
+          '/hars para o teste de ansiedade\n/madrs para o teste de depressão\n'
           '/start para as configurações de notificação'
 }
 
@@ -65,7 +66,8 @@ HARS_INTRO = {
     'ru': 'Ниже список фраз, описывающих определенные чувства, которые испытывают люди. Оцените пациента, '
           'выбрав ответ, который лучше всего '
           'описывает степень в которой он/она находится.',
-    'pt': 'Abaixo está uma lista de frases que descrevem alguns sentimentos que as pessoas têm. Classifique os pacientes indicando '
+    'pt': 'Abaixo está uma lista de frases que descrevem alguns sentimentos que as pessoas têm. '
+          'Classifique os pacientes indicando '
           'a resposta que melhor descreve a extensão em que ele/ela tem essas condições.'
 }
 
@@ -88,7 +90,8 @@ MADRS_INTRO = {
     'pt': 'Por favor, observe: Este teste é normalmente administrado por um clínico, mas é disponibilizado aqui '
           'com fins informativos. Ele pode não ser tão preciso quando autoadministrado, por se basear '
           'em uma avaliação objetiva.\n'
-          'Estas questões dizem respeito a como o paciente se sentiu durante a última semana. Classifique cada ítem em uma escala '
+          'Estas questões dizem respeito a como o paciente se sentiu durante a última semana. '
+          'Classifique cada ítem em uma escala '
           'de 0 a 6, sendo 0 "normal/não apresenta" e 6 sendo "extrema".\n'
           'Os números 1, 3 e 5 não possuem classificação própria na gravidade, na verdade, esses números são '
           'representativos nos níveis entre as duas escolhas.'
