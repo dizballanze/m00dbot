@@ -27,9 +27,10 @@ def start(bot, update):
     # Select language
     langs_markup = InlineKeyboardMarkup([[
         InlineKeyboardButton('English {}'.format(b'\xF0\x9F\x87\xAC\xF0\x9F\x87\xA7'.decode()), callback_data='en'),
-        InlineKeyboardButton('Русский {}'.format(b'\xF0\x9F\x87\xB7\xF0\x9F\x87\xBA'.decode()), callback_data='ru')]])
+        InlineKeyboardButton('Русский {}'.format(b'\xF0\x9F\x87\xB7\xF0\x9F\x87\xBA'.decode()), callback_data='ru'),
+        InlineKeyboardButton('Português {}'.format(b'\xF0\x9F\x87\xA7\xF0\x9F\x87\xB7'.decode()), callback_data='pt')]])
     bot.send_message(
-        text='Choose your language / Выберите язык', reply_markup=langs_markup, chat_id=update.message.chat_id)
+        text='Choose your language / Выберите язык / Escolha seu idioma', reply_markup=langs_markup, chat_id=update.message.chat_id)
 
 
 def process_lang(bot, update):
@@ -187,7 +188,7 @@ if __name__ == '__main__':
     dispatcher.add_handler(start_handler)
     help_handler = CommandHandler('help', help)
     dispatcher.add_handler(help_handler)
-    updater.dispatcher.add_handler(CallbackQueryHandler(process_lang, pattern='(en|ru)'))
+    updater.dispatcher.add_handler(CallbackQueryHandler(process_lang, pattern='(en|ru|pt)'))
     updater.dispatcher.add_handler(CallbackQueryHandler(process_frequency, pattern='(none|daily|weekly)'))
     start_hars_quiz_handler = CommandHandler('hars', hars_quiz)
     dispatcher.add_handler(start_hars_quiz_handler)

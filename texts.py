@@ -1,21 +1,25 @@
 FREQUENCY_QUESTION = {
     'ru': 'Частота уведомлений:',
-    'en': 'Reminder frequency:'
+    'en': 'Reminder frequency:',
+    'pt': 'Frequência do Lembrete:'
 }
 
 FREQUENCY_NONE = {
     'ru': 'Отключить',
-    'en': 'Disable'
+    'en': 'Disable',
+    'pt': 'Desabilitar'
 }
 
 FREQUENCY_DAILY = {
     'ru': 'Ежедневно',
-    'en': 'Daily'
+    'en': 'Daily',
+    'pt': 'Diariamente'
 }
 
 FREQUENCY_WEEKLY = {
     'ru': 'Еженедельно',
-    'en': 'Weekly'
+    'en': 'Weekly',
+    'pt': 'Semanalmente'
 }
 
 INTRO = {
@@ -34,14 +38,24 @@ INTRO = {
           '/hars - тест тревоги (Шкала Тревоги Гамильтона)\n'
           '/madrs - тест депрессии (Шкала Монтгомери-Асберга)\n'
           '/start - настройки\n'
-          '/export - экспорт результатов'
+          '/export - экспорт результатов',
+    'pt': '🚀 Olá, amigo(a)! Aqui está o chat bot simples e útil que ajuda '
+          'a acompanhar variações de humor (ansiedade e depressão). Você pode receber '
+          'lembretes de tempos em tempos ou iniciar os testes manualmente. '
+          'Mantenha a calma! 🌼\n\n'
+          '/hars - teste de ansiedade (Escala de Classificação de Ansiedade de Hamilton)\n'
+          '/madrs - teste de depressão (Escada de Classificação de Depressão de Montgomery–Åsberg)\n'
+          '/start - configurações\n'
+          '/export - exportar resultados'
 }
 
 PERIODIC_NOTIFICATION = {
     'ru': 'Пора пройти тест ⏰\n\nНажмите:\n/hars для тестирования тревоги\n/madrs для тестирования депрессии\n'
           '/start - для настройки уведомлений',
     'en': 'It\'s time to take some tests ⏰\nP\nress :\n/hars for anxiety testing\n/madrs for deperession testing\n'
-          '/start for notification settings'
+          '/start for notification settings',
+    'pt': 'Hora de tomar alguns testes ⏰\nDigite :\n/hars para o teste de ansiedade\n/madrs para o teste de depressão\n'
+          '/start para as configurações de notificação'
 }
 
 
@@ -50,7 +64,9 @@ HARS_INTRO = {
           'the answer which best describes the extent to which he/she has these conditions.',
     'ru': 'Ниже список фраз, описывающих определенные чувства, которые испытывают люди. Оцените пациента, '
           'выбрав ответ, который лучше всего '
-          'описывает степень в которой он/она находится.'
+          'описывает степень в которой он/она находится.',
+    'pt': 'Abaixo está uma lista de frases que descrevem alguns sentimentos que as pessoas têm. Classifique os pacientes indicando '
+          'a resposta que melhor descreve a extensão em que ele/ela tem essas condições.'
 }
 
 
@@ -68,10 +84,18 @@ MADRS_INTRO = {
           'Эти вопросы касаются того, как пациент себя чувствовал '
           'на протяжении последней недели. Оцените каждый пункт по '
           'шкале от 0 до 6, где 0 означает "нормально/отсутствует" и 6 означает "крайняя степень".\n'
-          'Числа 1, 3 и 5 не имеют текстового описания, они представляют уровень между 2-мя вариантами.'
+          'Числа 1, 3 и 5 не имеют текстового описания, они представляют уровень между 2-мя вариантами.',
+    'pt': 'Por favor, observe: Este teste é normalmente administrado por um clínico, mas é disponibilizado aqui '
+          'com fins informativos. Ele pode não ser tão preciso quando autoadministrado, por se basear '
+          'em uma avaliação objetiva.\n'
+          'Estas questões dizem respeito a como o paciente se sentiu durante a última semana. Classifique cada ítem em uma escala '
+          'de 0 a 6, sendo 0 "normal/não apresenta" e 6 sendo "extrema".\n'
+          'Os números 1, 3 e 5 não possuem classificação própria na gravidade, na verdade, esses números são '
+          'representativos nos níveis entre as duas escolhas.'
 }
 
 EXPORT = {
     'en': 'Choose export format:',
-    'ru': 'Выберите формат экспорта:'
+    'ru': 'Выберите формат экспорта:',
+    'pt': 'Escolha o formato de exportação:'
 }
