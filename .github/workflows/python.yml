@@ -17,8 +17,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-      with:
-        python-version: 3.6
     - name: Install dependencies
       run: pip install -r requirements.txt
     - name: Test with unittest
