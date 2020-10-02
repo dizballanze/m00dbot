@@ -22,4 +22,4 @@ jobs:
     - name: Test with unittest
       run: make test
     - name: Lint with pylama
-      run: make link
+      run: make lint
