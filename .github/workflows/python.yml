@@ -1,0 +1,25 @@
+name: Python CI
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+
+    runs-on: ubuntu-20.04
+
+    container: python:3.6-buster
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install dependencies
+      run: pip install -r requirements.txt
+    - name: Test with unittest
+      run: make test
+    - name: Lint with pylama
+      run: make lint
