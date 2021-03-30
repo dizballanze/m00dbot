@@ -1,25 +1,29 @@
 FREQUENCY_QUESTION = {
     'ru': 'Частота уведомлений:',
     'en': 'Reminder frequency:',
-    'pt': 'Frequência do Lembrete:'
+    'pt': 'Frequência do Lembrete:',
+    'it': 'Frequenza dei promemoria:'
 }
 
 FREQUENCY_NONE = {
     'ru': 'Отключить',
     'en': 'Disable',
-    'pt': 'Desabilitar'
+    'pt': 'Desabilitar',
+    'it': 'Disattiva'
 }
 
 FREQUENCY_DAILY = {
     'ru': 'Ежедневно',
     'en': 'Daily',
-    'pt': 'Diariamente'
+    'pt': 'Diariamente',
+    'it': 'Giornaliere'
 }
 
 FREQUENCY_WEEKLY = {
     'ru': 'Еженедельно',
     'en': 'Weekly',
-    'pt': 'Semanalmente'
+    'pt': 'Semanalmente',
+    'it': 'Settimanale'
 }
 
 INTRO = {
@@ -46,17 +50,27 @@ INTRO = {
           '/hars - teste de ansiedade (Escala de Classificação de Ansiedade de Hamilton)\n'
           '/madrs - teste de depressão (Escada de Classificação de Depressão de Montgomery–Åsberg)\n'
           '/start - configurações\n'
-          '/export - exportar resultados'
+          '/export - exportar resultados',
+    'it': '🚀 Ciao, amico! Here is the simple and useful chat bot that helps '
+          'per tenere traccia dei problemi dell\'umore (ansia e depressione). Puoi ricevere '
+          'comodi promemoria di volta in volta oppure effettuare i test manualmente. '
+          'Mantieni la calma 🌼\n\n'
+          '/hars - test dell\'ansia (Scala di valutazione dell\'ansia di Hamilton)\n'
+          '/madrs - test della depressione (Scala di valutazione della depressione di Montgomery–Åsberg)\n'
+          '/start - impostazioni\n'
+          '/export - esporta risultati',
 }
 
 PERIODIC_NOTIFICATION = {
     'ru': 'Пора пройти тест ⏰\n\nНажмите:\n/hars для тестирования тревоги\n/madrs для тестирования депрессии\n'
           '/start - для настройки уведомлений',
-    'en': 'It\'s time to take some tests ⏰\nP\nress :\n/hars for anxiety testing\n/madrs for deperession testing\n'
+    'en': 'It\'s time to take some tests ⏰\nP\nress :\n/hars for anxiety testing\n/madrs for depression testing\n'
           '/start for notification settings',
     'pt': 'Hora de tomar alguns testes ⏰\nDigite :\n'
           '/hars para o teste de ansiedade\n/madrs para o teste de depressão\n'
-          '/start para as configurações de notificação'
+          '/start para as configurações de notificação',
+    'it': 'È ora di fare alcuni test ⏰\nPremi :\n/hars per testare l\'ansia\n/madrs per testare la depressione\n'
+          '/start per le impostazioni di notifica',
 }
 
 
@@ -68,12 +82,15 @@ HARS_INTRO = {
           'описывает степень в которой он/она находится.',
     'pt': 'Abaixo está uma lista de frases que descrevem alguns sentimentos que as pessoas têm. '
           'Classifique os pacientes indicando '
-          'a resposta que melhor descreve a extensão em que ele/ela tem essas condições.'
+          'a resposta que melhor descreve a extensão em que ele/ela tem essas condições.',
+    'it': 'Di seguito è riportato un elenco di frasi che descrivono una certa sensazione che le persone hanno. '
+          'Vota i pazienti trovando la risposta che meglio descrive la misura per cui lui/lei presenta queste '
+          'condizioni.',
 }
 
 
 MADRS_INTRO = {
-    'en': 'Please note: This test is typically administered by a third-party clinician, but it is provided here '
+    'en': 'Please note: This test is typically administered by a third-party clinician, but it is provided here for '
           'informational purposes. This test may not be as accurate when self-administered, as it relies on a '
           'somewhat objective assessment.\n'
           'These questions concern how the patient has felt over the past week. Rate each item on a scale '
@@ -94,11 +111,17 @@ MADRS_INTRO = {
           'Classifique cada ítem em uma escala '
           'de 0 a 6, sendo 0 "normal/não apresenta" e 6 sendo "extrema".\n'
           'Os números 1, 3 e 5 não possuem classificação própria na gravidade, na verdade, esses números são '
-          'representativos nos níveis entre as duas escolhas.'
+          'representativos nos níveis entre as duas escolhas.',
+    'it': 'Nota che: Questo test è in genere somministrato da un clinico di terze parti, ma viene fornito qui per '
+          'scopi informativi. Questo test potrebbe non essere accurato quando viene auto-somministrato, dato che si basa su una valutazione obiettiva.\n'
+          'Queste domande riguardano come il paziente si è sentito nella scorsa settimana. Valuta ogni elemento su una scala a partire da 0 fino a 6, con 0 che significa “normale/non presente" e 6 “estremo.”\n'
+          'I numeri 1, 3, e 5 non hanno la propria valutazione testuale di gravità, piuttosto, questi numeri sono '
+          'rappresentativi dei livelli tra le due scelte.'
 }
 
 EXPORT = {
     'en': 'Choose export format:',
     'ru': 'Выберите формат экспорта:',
-    'pt': 'Escolha o formato de exportação:'
+    'pt': 'Escolha o formato de exportação:',
+    'it': 'Scegli il formato di esportazione:'
 }

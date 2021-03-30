@@ -29,9 +29,10 @@ def start(bot, update):
         InlineKeyboardButton('English {}'.format(b'\xF0\x9F\x87\xAC\xF0\x9F\x87\xA7'.decode()), callback_data='en'),
         InlineKeyboardButton('Русский {}'.format(b'\xF0\x9F\x87\xB7\xF0\x9F\x87\xBA'.decode()), callback_data='ru'),
         InlineKeyboardButton('Português {}'.format(b'\xF0\x9F\x87\xA7\xF0\x9F\x87\xB7'.decode()), callback_data='pt')
+        InlineKeyboardButton('Italian {}'.format(b'\xF0\x9F\x87\xAE\xF0\x9F\x87\xB9'.decode()), callback_data='it')
     ]])
     bot.send_message(
-        text='Choose your language / Выберите язык / Escolha seu idioma',
+        text='Choose your language / Выберите язык / Escolha seu idioma / Scegli la tua lingua',
         reply_markup=langs_markup,
         chat_id=update.message.chat_id,
     )
