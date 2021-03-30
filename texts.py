@@ -51,7 +51,7 @@ INTRO = {
           '/madrs - teste de depressão (Escada de Classificação de Depressão de Montgomery–Åsberg)\n'
           '/start - configurações\n'
           '/export - exportar resultados',
-    'it': '🚀 Ciao, amico! Questo è un semplice e utile charbot che ti aiuta '
+    'it': '🚀 Ciao, amico! Questo è un semplice e utile chatbot che ti aiuta '
           'a tenere traccia dei problemi dell\'umore (ansia e depressione). Puoi ricevere '
           'comodi promemoria di volta in volta oppure effettuare i test manualmente. '
           'Mantieni la calma 🌼\n\n'
