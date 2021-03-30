@@ -42,7 +42,7 @@ class HARSQuiz(BaseQuiz):
     RESULTS = {
         'ru': ['отсутствие тревоги 👍', 'средняя выраженность тревожного расстройства 😐', 'тяжелая тревога 😦'],
         'en': ['mild anxiety severity 👍','mild to moderate anxiety severity 😐','moderate to severe anxiety severity 😦'],
-        'pt': ['ansiedade leve 👍', 'ansiedade leve a moderada 😐', 'ansiedade moderada a severa 😦'],
+        'pt': ['ansiedade leve 👍', 'ansiedade leve a moderada 😐', 'ansiedade moderada a severa 😦']
         'it': ['ansia lieve 👍', 'ansia da lieve a moderata 😐', 'ansia da moderata a grave 😦']
     }
 
