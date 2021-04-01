@@ -100,8 +100,8 @@ MADRS_INTRO = {
     'it': 'Per favore, nota che: Questo test è in genere somministrato da un clinico di terze parti, '
           'ma viene fornito qui per scopi informativi. Questo test potrebbe non essere accurato quando '
           'viene auto-somministrato, dato che si basa su una valutazione alquanto soggettiva.\n'
-          'Queste domande riguardano come il paziente si sia sentito nella scorsa settimana. Valuta ogni elemento su una scala '
-          ' da 0 ("normale/non presente") a 6 ("estremo"). \n'
+          'Queste domande riguardano come il paziente si sia sentito nella scorsa settimana. '
+          'Valuta ogni elemento su una scala da 0 ("normale/non presente") a 6 ("estremo"). \n'
           'I numeri 1, 3, e 5 non hanno la propria valutazione testuale di gravità, piuttosto, questi numeri sono '
           'rappresentativi dei livelli tra le due scelte.',
     'pt': 'Por favor, observe: Este teste é normalmente administrado por um clínico, mas é disponibilizado aqui '
